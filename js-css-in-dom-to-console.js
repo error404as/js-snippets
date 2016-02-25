@@ -2,7 +2,7 @@
 /*
 Finds all JS/CSS files included to the page (script/link tags in DOM).
 Output in console.
-May be added in Developer Panel to Sources -> Snippets
+May be added in Google Chrome Developer Panel to Sources -> Snippets
  */
 
 function getScripts(){
