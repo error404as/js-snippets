@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>JS Object Sorting</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+textarea { display: block; width: 98%; }
+button {margin: 10px 0; padding: 3px 10px;}
+</style>
+</head>
+<body>
+
+<h2>Sorting JS plain object by keys</h2>
+<textarea id="src" cols="30" rows="10">
+{
+    id: 'en-US',
+    date_format: 'MM.DD.YY',
+    total_time_decimal: false,
+    time_of_day_am_pm: true,
+    value: 111,
+    decimal_separator: ',',
+    currency_symbol: '€'
+}
+</textarea>
+<button id="btn">Click</button> <label><input type="checkbox" checked id="out"> output as JS Object (or JSON)</label>
+<textarea id="dist" cols="30" rows="10"></textarea>
+  
+<script>
+document.getElementById('btn').addEventListener('click', ()=>{
+    eval('var src = ' + document.getElementById('src').value);
+    let arr = [];
+    for(let itm in src){
+        arr.push([itm, src[itm]]);
+    };
+    arr.sort((a,b) => {
+        if(a[0] > b[0]){ return 1; } else if(a[0] < b[0]){ return -1; }
+        return 0;
+    });
+
+    if(document.getElementById('out').checked) {
+        let result = `{\n${arr.map(el => {
+            let val = typeof el[1] === 'string' ? `'${el[1].replace(/'/g, "\\'")}'` : el[1];
+            return `    ${el[0]}: ${val}`;
+
+        }).join(',\n')}\n}`;
+        document.getElementById('dist').value = result;
+    } else {
+        let dist = {};
+        arr.forEach(el => { dist[el[0]] = el[1]; });
+        document.getElementById('dist').value = JSON.stringify(dist, '', 4);
+    }
+
+});
+</script>
+
+</body>
+</html>
